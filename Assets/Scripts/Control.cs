@@ -8,13 +8,13 @@ public class Control : MonoBehaviour
     void Start()
     {
         // 加载主菜单场景
-        SceneController.Instance.LoadScene("MainMenu");
+        //SceneController.Instance.LoadScene("MainMenu");
 
         // 加载游戏场景（异步）
         SceneController.Instance.LoadSceneAsync("GameScene");
 
         // 重新加载当前场景
-        SceneController.Instance.ReloadCurrentScene();
+        //SceneController.Instance.ReloadCurrentScene();
     }
 
     // Update is called once per frame
