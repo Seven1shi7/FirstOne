@@ -1621,7 +1621,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8317232996166290759}
-  - component: {fileID: 5154443236852725064}
   - component: {fileID: 1550914377661632490}
   - component: {fileID: 5190972835061631286}
   m_Layer: 9
@@ -1653,30 +1652,6 @@ Transform:
   - {fileID: 1325280475778136480}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
---- !u!111 &5154443236852725064
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7316380522089615007}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400002, guid: 83bc0f5634e205244a0457d0f1632e65, type: 3}
-  m_Animations:
-  - {fileID: 7400000, guid: 83bc0f5634e205244a0457d0f1632e65, type: 3}
-  - {fileID: 7400002, guid: 83bc0f5634e205244a0457d0f1632e65, type: 3}
-  - {fileID: 7400004, guid: 83bc0f5634e205244a0457d0f1632e65, type: 3}
-  - {fileID: 7400006, guid: 83bc0f5634e205244a0457d0f1632e65, type: 3}
-  - {fileID: 7400016, guid: 83bc0f5634e205244a0457d0f1632e65, type: 3}
-  - {fileID: 7400018, guid: 83bc0f5634e205244a0457d0f1632e65, type: 3}
-  - {fileID: 7400012, guid: 83bc0f5634e205244a0457d0f1632e65, type: 3}
-  - {fileID: 7400008, guid: 83bc0f5634e205244a0457d0f1632e65, type: 3}
-  - {fileID: 7400010, guid: 83bc0f5634e205244a0457d0f1632e65, type: 3}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 1
 --- !u!136 &1550914377661632490
 CapsuleCollider:
   m_ObjectHideFlags: 0
