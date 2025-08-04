@@ -2216,6 +2216,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yaogan: {fileID: 1789135929}
+  animation: {fileID: 0}
+  attack: {fileID: 2063794864}
 --- !u!1 &2008628558
 GameObject:
   m_ObjectHideFlags: 0
