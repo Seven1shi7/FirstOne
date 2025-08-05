@@ -8,9 +8,12 @@ public class FanDetection : MonoBehaviour
     public int viewAngleStep = 20;//射线密度
     [Range(0, 360)]
     public float viewAngle = 270f;//视野角度
+    public Move move;
     void Start()
     {
+        Move movee = GetComponent<Move>();
 
+        movee.accack1.interactable = false;
     }
 
     void Update()
@@ -41,7 +44,9 @@ public class FanDetection : MonoBehaviour
                 {
                     // 输出提示信息
                     Debug.Log("视野内有敌人");
-                    // 添加自己想要的逻辑
+
+                   //move.accack1.interactable = true; // 启用攻击按钮
+
                 }
             }
         }
