@@ -27,4 +27,16 @@ public class EnemyScripts : MonoBehaviour
             animator.SetBool("attack", false);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "jian")
+        {
+            hp.value -= 0.3f;
+            if(hp.value <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
 }
