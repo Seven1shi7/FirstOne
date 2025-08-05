@@ -23,6 +23,7 @@ public class Move : MonoBehaviour
         {
 
             animation.Play("attack");
+            
         });
 
         accack2.onClick.AddListener(() =>
@@ -40,7 +41,7 @@ public class Move : MonoBehaviour
             animation.Play("skill");
         });
 
-
+        
 
     }
 
