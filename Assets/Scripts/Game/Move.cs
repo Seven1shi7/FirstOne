@@ -19,20 +19,24 @@ public class Move : MonoBehaviour
     {
         yaogan.move = move;
         animation = GetComponent<Animation>();
-        accack1.onClick.AddListener(() => {
+        accack1.onClick.AddListener(() =>
+        {
 
             animation.Play("attack");
         });
 
-        accack2.onClick.AddListener(() => {
+        accack2.onClick.AddListener(() =>
+        {
             animation.Play("attack2");
         });
 
-        accack3.onClick.AddListener(() => {
+        accack3.onClick.AddListener(() =>
+        {
             animation.Play("attack3");
         });
 
-        accack4.onClick.AddListener(() => {
+        accack4.onClick.AddListener(() =>
+        {
             animation.Play("skill");
         });
 
@@ -49,17 +53,18 @@ public class Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     
+
         if (yaogan.ismove)
         {
             // isdown = true;
             transform.position += transform.forward * 5 * Time.deltaTime;
+            animation.Stop("free");
             animation.Play("walk");
         }
         else
         {
             animation.Stop("walk");
-            //animation.Play("idle");
+            animation.Blend("idle");
         }
 
     }
@@ -67,7 +72,7 @@ public class Move : MonoBehaviour
 
     public void LateUpdate()
     {
-        
+
 
     }
 
