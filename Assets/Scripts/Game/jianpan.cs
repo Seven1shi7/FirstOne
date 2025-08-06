@@ -33,7 +33,7 @@ public class TriggerFollower : MonoBehaviour
     void Update()
     {
         // 如果目标存在，则更新位置和旋转
-        if (target.tag=="jian")
+        if (target.tag=="Player")
         {
             // 设置位置：目标位置 + 偏移量
             transform.position = target.position + offset;

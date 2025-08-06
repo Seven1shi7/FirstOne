@@ -64,13 +64,13 @@ public class FanDetection : MonoBehaviour
         }
 
         // 统一设置按钮状态，避免多次设置
-        if (move.accack1 != null)
-        {
-            move.accack1.interactable = enemyInSight;
-        }
-        else
-        {
-            Debug.LogError("accack1按钮未赋值！请检查Move脚本中的引用");
-        }
+        //if (move.accack1 != null)
+        //{
+        //    move.accack1.interactable = enemyInSight;
+        //}
+        //else
+        //{
+        //    Debug.LogError("accack1按钮未赋值！请检查Move脚本中的引用");
+        //}
     }
 }
