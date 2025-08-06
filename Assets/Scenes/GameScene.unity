@@ -860,6 +860,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100086, guid: 83bc0f5634e205244a0457d0f1632e65, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1930161416}
+    - targetCorrespondingSourceObject: {fileID: 100086, guid: 83bc0f5634e205244a0457d0f1632e65, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1930161418}
     - targetCorrespondingSourceObject: {fileID: 100200, guid: 83bc0f5634e205244a0457d0f1632e65, type: 3}
       insertIndex: -1
       addedObject: {fileID: 100127953}
@@ -2912,6 +2915,10 @@ MonoBehaviour:
   accack2: {fileID: 172651610}
   accack3: {fileID: 1236812155}
   accack4: {fileID: 616145309}
+  skillRadius: 5
+  skillWidth: 3
+  skillLength: 8
+  skillAngle: 60
 --- !u!114 &1930161413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2989,6 +2996,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: {fileID: 1835722325}
+--- !u!114 &1930161418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930161409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c326e11550b15b94cb67ca56dccd949f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2008628558
 GameObject:
   m_ObjectHideFlags: 0
