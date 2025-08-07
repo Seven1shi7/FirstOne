@@ -23,26 +23,56 @@ public class Move : MonoBehaviour
     public float skillLength = 8f; // 矩形技能长度
     public float skillAngle = 60f; // 扇形技能角度
     
+    // 伤害设置
+    public float circleDamage = 30f; // 圆形技能伤害
+    public float rectangleDamage = 40f; // 矩形技能伤害
+    public float sectorDamage = 50f; // 扇形技能伤害
+    public float attackDamage = 20f; // 普通攻击伤害
+    
+    // 可视化设置
+    public bool showSkillRange = true; // 是否显示技能范围
+    public Color circleColor = Color.red; // 圆形范围颜色
+    public Color rectangleColor = Color.blue; // 矩形范围颜色
+    public Color sectorColor = Color.green; // 扇形范围颜色
+    public float lineWidth = 2f; // 线条宽度
+    
+    private SkillRangeVisualizer visualizer; // 技能范围可视化器
+    
     // Start is called before the first frame update
     void Start()
     {
         yaogan.move = move;
         animation = GetComponent<Animation>();
+        
+        // 获取或添加技能范围可视化器
+        visualizer = GetComponent<SkillRangeVisualizer>();
+        if (visualizer == null)
+        {
+            visualizer = gameObject.AddComponent<SkillRangeVisualizer>();
+        }
+        
         accack1.onClick.AddListener(() =>
         {
-
             animation.Play("attack");
-            
+            UseAttackSkill(attackDamage, "普通攻击");
+            // 显示技能范围
+            if (visualizer != null) visualizer.ShowSkillRanges();
         });
 
         accack2.onClick.AddListener(() =>
         {
             animation.Play("attack2");
+            UseAttackSkill(attackDamage * 1.5f, "重击");
+            // 显示技能范围
+            if (visualizer != null) visualizer.ShowSkillRanges();
         });
 
         accack3.onClick.AddListener(() =>
         {
             animation.Play("attack3");
+            UseAttackSkill(attackDamage * 2f, "连击");
+            // 显示技能范围
+            if (visualizer != null) visualizer.ShowSkillRanges();
         });
 
         accack4.onClick.AddListener(() =>
@@ -50,10 +80,9 @@ public class Move : MonoBehaviour
             animation.Play("skill");
             // 使用技能判定
             UseSkill();
+            // 显示技能范围
+            if (visualizer != null) visualizer.ShowSkillRanges();
         });
-
-        
-
     }
 
     /// <summary>
@@ -64,34 +93,107 @@ public class Move : MonoBehaviour
         // 获取所有敌人（假设敌人有Enemy标签）
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         
+        Debug.Log($"找到 {enemies.Length} 个敌人");
+        
+        if (enemies.Length == 0)
+        {
+            Debug.LogWarning("没有找到任何敌人！请确保敌人有'Enemy'标签");
+            return;
+        }
+        
         foreach (GameObject enemy in enemies)
         {
             Vector3 enemyPosition = enemy.transform.position;
+            float distance = Vector3.Distance(transform.position, enemyPosition);
+            
+            Debug.Log($"检查敌人 {enemy.name}，距离: {distance:F2}，技能半径: {skillRadius}");
             
             // 圆形技能判定
             if (IsInCircle(transform.position, enemyPosition, skillRadius))
             {
                 Debug.Log($"敌人 {enemy.name} 在圆形技能范围内");
-                // 对敌人造成伤害
-                // DealDamage(enemy);
+                DealDamage(enemy, circleDamage, "圆形");
             }
             
             // 矩形技能判定
             if (IsInRectangle(transform.position, transform.forward, enemyPosition, skillWidth, skillLength))
             {
                 Debug.Log($"敌人 {enemy.name} 在矩形技能范围内");
-                // 对敌人造成伤害
-                // DealDamage(enemy);
+                DealDamage(enemy, rectangleDamage, "矩形");
             }
             
             // 扇形技能判定
             if (IsInSector(transform.position, transform.forward, enemyPosition, skillRadius, skillAngle))
             {
                 Debug.Log($"敌人 {enemy.name} 在扇形技能范围内");
-                // 对敌人造成伤害
-                // DealDamage(enemy);
+                DealDamage(enemy, sectorDamage, "扇形");
             }
         }
+    }
+    
+    /// <summary>
+    /// 使用攻击技能（近战攻击）
+    /// </summary>
+    /// <param name="damage">伤害值</param>
+    /// <param name="attackType">攻击类型</param>
+    private void UseAttackSkill(float damage, string attackType)
+    {
+        // 获取所有敌人
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        
+        Debug.Log($"使用{attackType}，找到 {enemies.Length} 个敌人");
+        
+        if (enemies.Length == 0)
+        {
+            Debug.LogWarning("没有找到任何敌人！请确保敌人有'Enemy'标签");
+            return;
+        }
+        
+        foreach (GameObject enemy in enemies)
+        {
+            Vector3 enemyPosition = enemy.transform.position;
+            float distance = Vector3.Distance(transform.position, enemyPosition);
+            
+            // 近战攻击范围（较小的圆形范围）
+            float attackRange = 2f;
+            
+            Debug.Log($"检查敌人 {enemy.name}，距离: {distance:F2}，攻击范围: {attackRange}");
+            
+            if (IsInCircle(transform.position, enemyPosition, attackRange))
+            {
+                Debug.Log($"敌人 {enemy.name} 在{attackType}范围内");
+                DealDamage(enemy, damage, attackType);
+            }
+        }
+    }
+    
+    /// <summary>
+    /// 对敌人造成伤害
+    /// </summary>
+    /// <param name="enemy">敌人对象</param>
+    /// <param name="damage">伤害值</param>
+    /// <param name="damageType">伤害类型</param>
+    private void DealDamage(GameObject enemy, float damage, string damageType)
+    {
+        Debug.Log($"尝试对敌人 {enemy.name} 造成 {damage} 点 {damageType} 伤害");
+        
+        // 获取敌人的Enemy组件
+        Enemy enemyComponent = enemy.GetComponent<Enemy>();
+        if (enemyComponent == null)
+        {
+            Debug.LogError($"敌人 {enemy.name} 没有Enemy组件！");
+            return;
+        }
+        
+        if (!enemyComponent.IsAlive())
+        {
+            Debug.LogWarning($"敌人 {enemy.name} 已经死亡");
+            return;
+        }
+        
+        // 对敌人造成伤害
+        enemyComponent.TakeDamage(damage, damageType);
+        Debug.Log($"成功对敌人 {enemy.name} 造成 {damage} 点 {damageType} 伤害");
     }
 
     /// <summary>
@@ -174,6 +276,150 @@ public class Move : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 在Scene视图中绘制技能范围
+    /// </summary>
+    private void OnDrawGizmos()
+    {
+        if (!showSkillRange) return;
+
+        // 绘制圆形范围
+        DrawCircleRange();
+        
+        // 绘制矩形范围
+        DrawRectangleRange();
+        
+        // 绘制扇形范围
+        DrawSectorRange();
+    }
+
+    /// <summary>
+    /// 绘制圆形技能范围
+    /// </summary>
+    private void DrawCircleRange()
+    {
+        Gizmos.color = circleColor;
+        Gizmos.DrawWireSphere(transform.position, skillRadius);
+        
+        // 绘制圆形填充（半透明）
+        Gizmos.color = new Color(circleColor.r, circleColor.g, circleColor.b, 0.2f);
+        Gizmos.DrawSphere(transform.position, skillRadius);
+    }
+
+    /// <summary>
+    /// 绘制矩形技能范围
+    /// </summary>
+    private void DrawRectangleRange()
+    {
+        Vector3 center = transform.position + transform.forward * (skillLength / 2);
+        Vector3 right = Vector3.Cross(Vector3.up, transform.forward).normalized;
+        
+        // 计算矩形的四个顶点
+        Vector3 topLeft = center + right * (skillWidth / 2) + transform.forward * (skillLength / 2);
+        Vector3 topRight = center - right * (skillWidth / 2) + transform.forward * (skillLength / 2);
+        Vector3 bottomLeft = center + right * (skillWidth / 2) - transform.forward * (skillLength / 2);
+        Vector3 bottomRight = center - right * (skillWidth / 2) - transform.forward * (skillLength / 2);
+        
+        // 绘制矩形边框
+        Gizmos.color = rectangleColor;
+        Gizmos.DrawLine(topLeft, topRight);
+        Gizmos.DrawLine(topRight, bottomRight);
+        Gizmos.DrawLine(bottomRight, bottomLeft);
+        Gizmos.DrawLine(bottomLeft, topLeft);
+        
+        // 绘制矩形填充（半透明）
+        Gizmos.color = new Color(rectangleColor.r, rectangleColor.g, rectangleColor.b, 0.2f);
+        Gizmos.DrawMesh(CreateRectangleMesh(), center, transform.rotation);
+    }
+
+    /// <summary>
+    /// 绘制扇形技能范围
+    /// </summary>
+    private void DrawSectorRange()
+    {
+        Gizmos.color = sectorColor;
+        
+        // 绘制扇形边界
+        int segments = 20;
+        float angleStep = skillAngle / segments;
+        Vector3 startPoint = transform.position;
+        
+        for (int i = 0; i <= segments; i++)
+        {
+            float currentAngle = -skillAngle / 2 + i * angleStep;
+            Vector3 direction = Quaternion.Euler(0, currentAngle, 0) * transform.forward;
+            Vector3 endPoint = transform.position + direction * skillRadius;
+            
+            if (i > 0)
+            {
+                Gizmos.DrawLine(startPoint, endPoint);
+            }
+            startPoint = endPoint;
+        }
+        
+        // 绘制扇形填充（半透明）
+        Gizmos.color = new Color(sectorColor.r, sectorColor.g, sectorColor.b, 0.2f);
+        Gizmos.DrawMesh(CreateSectorMesh(), transform.position, transform.rotation);
+    }
+
+    /// <summary>
+    /// 创建矩形网格用于填充
+    /// </summary>
+    private Mesh CreateRectangleMesh()
+    {
+        Mesh mesh = new Mesh();
+        
+        Vector3[] vertices = new Vector3[4];
+        vertices[0] = new Vector3(-skillWidth / 2, 0, -skillLength / 2);
+        vertices[1] = new Vector3(skillWidth / 2, 0, -skillLength / 2);
+        vertices[2] = new Vector3(skillWidth / 2, 0, skillLength / 2);
+        vertices[3] = new Vector3(-skillWidth / 2, 0, skillLength / 2);
+        
+        int[] triangles = new int[] { 0, 1, 2, 0, 2, 3 };
+        
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+        mesh.RecalculateNormals();
+        
+        return mesh;
+    }
+
+    /// <summary>
+    /// 创建扇形网格用于填充
+    /// </summary>
+    private Mesh CreateSectorMesh()
+    {
+        Mesh mesh = new Mesh();
+        
+        int segments = 20;
+        Vector3[] vertices = new Vector3[segments + 2];
+        int[] triangles = new int[segments * 3];
+        
+        // 中心点
+        vertices[0] = Vector3.zero;
+        
+        // 扇形边界点
+        for (int i = 0; i <= segments; i++)
+        {
+            float angle = -skillAngle / 2 + (skillAngle / segments) * i;
+            Vector3 direction = Quaternion.Euler(0, angle, 0) * Vector3.forward;
+            vertices[i + 1] = direction * skillRadius;
+        }
+        
+        // 创建三角形
+        for (int i = 0; i < segments; i++)
+        {
+            triangles[i * 3] = 0;
+            triangles[i * 3 + 1] = i + 1;
+            triangles[i * 3 + 2] = i + 2;
+        }
+        
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+        mesh.RecalculateNormals();
+        
+        return mesh;
+    }
 
     public void LateUpdate()
     {
