@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     public Slider healthBar; // 血条
     public Text healthText; // 血量文本
     public GameObject damageTextPrefab; // 伤害数字预制体
+    public bool showHealthBar = true; // 是否显示血条
     
     [Header("视觉效果")]
     public Material normalMaterial; // 正常材质
@@ -43,8 +44,25 @@ public class Enemy : MonoBehaviour
         // 设置标签
         gameObject.tag = "Enemy";
         
+        // 初始化血条
+        InitializeHealthBar();
+        
         // 更新UI
         UpdateHealthUI();
+    }
+    
+    /// <summary>
+    /// 初始化血条
+    /// </summary>
+    private void InitializeHealthBar()
+    {
+        if (healthBar != null)
+        {
+            healthBar.maxValue = 1;
+            healthBar.minValue = 0;
+            healthBar.value = 1;
+            healthBar.gameObject.SetActive(showHealthBar);
+        }
     }
     
     /// <summary>
@@ -198,10 +216,18 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public void UpdateHealthUI()
     {
+        if(healthBar == null)
+        {
+            healthBar = transform.Find("Slider").GetComponent<Slider>();
+        }
         // 更新血条
         if (healthBar != null)
         {
-            healthBar.value = currentHealth / maxHealth;
+            // 计算生命值百分比
+            float healthPercentage = Mathf.Clamp01(currentHealth / maxHealth);
+            
+            // 平滑更新血条
+            healthBar.value = Mathf.Lerp(healthBar.value, healthPercentage, Time.deltaTime * 10f);
         }
         
         // 更新血量文本
@@ -221,6 +247,12 @@ public class Enemy : MonoBehaviour
         isDead = true;
         
         Debug.Log($"{gameObject.name} 死亡了！");
+        
+        // 隐藏血条
+        if (healthBar != null)
+        {
+            healthBar.gameObject.SetActive(false);
+        }
         
         // 播放死亡特效
         if (deathEffect != null)
@@ -284,4 +316,4 @@ public class Enemy : MonoBehaviour
         // 不设置字体，使用Unity默认字体
         // 这样可以避免字体错误，同时保持功能正常
     }
-} 
+}

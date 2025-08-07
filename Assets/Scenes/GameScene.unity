@@ -438,17 +438,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1290306771689561486, guid: a3d74827adc2e984ca981ea2e0a2d161, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 337081082}
     - target: {fileID: 524695396384354015, guid: a3d74827adc2e984ca981ea2e0a2d161, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 524695396384354015, guid: a3d74827adc2e984ca981ea2e0a2d161, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 524695396384354015, guid: a3d74827adc2e984ca981ea2e0a2d161, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1172524707245970217, guid: a3d74827adc2e984ca981ea2e0a2d161, type: 3}
       propertyPath: m_LocalPosition.x
@@ -496,7 +500,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2746910838766248250, guid: a3d74827adc2e984ca981ea2e0a2d161, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7227178708119615570, guid: a3d74827adc2e984ca981ea2e0a2d161, type: 3}
       propertyPath: m_Size.y
@@ -508,11 +512,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7683166105394467608, guid: a3d74827adc2e984ca981ea2e0a2d161, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7683166105394467608, guid: a3d74827adc2e984ca981ea2e0a2d161, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2923,10 +2927,10 @@ MonoBehaviour:
   skillWidth: 3
   skillLength: 8
   skillAngle: 60
-  circleDamage: 30
-  rectangleDamage: 40
-  sectorDamage: 50
-  attackDamage: 20
+  circleDamage: 3
+  rectangleDamage: 4
+  sectorDamage: 5
+  attackDamage: 2
   showSkillRange: 1
   circleColor: {r: 1, g: 0, b: 0, a: 1}
   rectangleColor: {r: 0, g: 0, b: 1, a: 1}
@@ -3008,7 +3012,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70a7a812bc504b14f8fb050fd4dd3b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: {fileID: 1835722325}
+  hpSlider: {fileID: 0}
+  maxHealth: 100
+  currentHealth: 0
+  healthText: {fileID: 0}
+  damageTextPrefab: {fileID: 0}
+  hurtMaterial: {fileID: 0}
+  hurtFlashDuration: 0.1
+  deathEffect: {fileID: 0}
+  destroyDelay: 2
 --- !u!114 &1930161418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3245,7 +3257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9716e6f8211307499c35445277aba19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 2746910838766248250, guid: a3d74827adc2e984ca981ea2e0a2d161, type: 3}
+  enemyPrefab: {fileID: 832726821}
   maxEnemies: 5
   spawnRadius: 10
   spawnInterval: 3

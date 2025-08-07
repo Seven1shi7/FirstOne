@@ -24,10 +24,10 @@ public class Move : MonoBehaviour
     public float skillAngle = 60f; // 扇形技能角度
     
     // 伤害设置
-    public float circleDamage = 30f; // 圆形技能伤害
-    public float rectangleDamage = 40f; // 矩形技能伤害
-    public float sectorDamage = 50f; // 扇形技能伤害
-    public float attackDamage = 20f; // 普通攻击伤害
+    public float circleDamage = 3f; // 圆形技能伤害
+    public float rectangleDamage = 4f; // 矩形技能伤害
+    public float sectorDamage = 5f; // 扇形技能伤害
+    public float attackDamage = 2f; // 普通攻击伤害
     
     // 可视化设置
     public bool showSkillRange = true; // 是否显示技能范围

@@ -8,10 +8,12 @@ public class EnemyScripts : MonoBehaviour
     public Slider hp;
     Animator animator;
     public GameObject target;
+    Enemy enemy;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        Enemy enemy = GetComponent<Enemy>();
 
     }
 
@@ -33,7 +35,8 @@ public class EnemyScripts : MonoBehaviour
         if(other.tag == "jian")
         {
             hp.value -= 0.3f;
-            if(hp.value <= 0)
+            
+            if (hp.value <= 0)
             {
                 Destroy(gameObject);
             }

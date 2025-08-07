@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class JIneng : MonoBehaviour
 {
-    private void Start()
-    {
-        
-    }
-
-
 
     /// <summary>
     /// 判断目标点是否在以skillOrigin为中心，skillForward为朝向的矩形区域内
