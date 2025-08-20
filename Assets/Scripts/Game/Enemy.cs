@@ -59,7 +59,7 @@ public class Enemy : MonoBehaviour
         if (healthBar != null)
         {
             healthBar.maxValue = 1;
-            healthBar.minValue = 0;
+            healthBar.minValue = 0;  
             healthBar.value = 1;
             healthBar.gameObject.SetActive(showHealthBar);
         }
